@@ -1,0 +1,3 @@
+cmds-ran-upon-referral:
+   - token give %target% 25
+   - token give %sender% 10
