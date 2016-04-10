@@ -18,7 +18,7 @@ public class referAdd {
         this.plugin = passedPlugin;
     }
 
-    public void actionAdd(final Player p, String[] args) {
+    public void actionAdd(final Player p, String[] args, OfflinePlayer targetconfirmed, String uuid) {
 
         p.sendMessage(plugin.prefix + plugin.dgray + "Please specify a player: " + plugin.gray + "/refer admin add <player>" + plugin.dgray + ".");
         return;
@@ -29,7 +29,7 @@ public class referAdd {
         if (args.length == 2)
         {
             plugin.targetconfirmed = Bukkit.getOfflinePlayer(args[2]);
-            uuid = targetconfirmed.getUniqueId().toString();
+            uuid = plugin.targetconfirmed.getUniqueId().toString();
             String referGetCount = referdatabase.getString(targetconfirmed.getUniqueId().toString());
             if (targetconfirmed == null)
             {
