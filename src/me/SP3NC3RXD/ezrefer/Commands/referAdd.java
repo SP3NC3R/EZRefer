@@ -18,9 +18,9 @@ public class referAdd {
         this.plugin = passedPlugin;
     }
 
-    public void actionAdd(final Player p, String[] args, OfflinePlayer targetconfirmed) {
+    public void actionAdd(final Player p, String[] args) {
 
-        p.sendMessage(plugin.prefix + plugin.dgray + "Please specify a player: " + gray + "/refer admin add <player>" + dgray + ".");
+        p.sendMessage(plugin.prefix + plugin.dgray + "Please specify a player: " + plugin.gray + "/refer admin add <player>" + plugin.dgray + ".");
         return;
 
     }
