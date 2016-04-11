@@ -31,6 +31,5 @@ public class referTop {
         plugin.top10(topReferrals, p);
 
         return;
-        //end
     }
 }
