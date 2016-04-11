@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Spencer on 3/11/2016.
  */
+@SuppressWarnings("deprecation")
 public class referAmount {
     Main plugin;
 
@@ -16,30 +17,36 @@ public class referAmount {
     }
     public void actionAmount(final Player p, String[] args) {
 
-        targetconfirmedamount = Bukkit.getPlayer(args[0]);
-        referAmountTarget = referdatabase.getString(targetconfirmedamount.getUniqueId().toString());
-        if (args.length == 0) {
-            if (!referdatabase.contains(p.getUniqueId().toString())) {
-                sender.sendMessage(prefix + dgray + "You have never been referred before!");
-                return true;
+        if (args.length == 0)
+        {
+            if (!plugin.referdatabase.contains(p.getUniqueId().toString()))
+            {
+                p.sendMessage(plugin.prefix + plugin.dgray + "You have never been referred before!");
+                return;
             }
-            String referAmountSender = referdatabase.getString(p.getUniqueId().toString());
-            sender.sendMessage(prefix + dgray + "You have " + gray + referAmountSender + dgray + " referrals.");
-            return true;
+
+            String referAmountSender = plugin.referdatabase.getString(p.getUniqueId().toString());
+            p.sendMessage(plugin.prefix + plugin.dgray + "You have " + plugin.gray + referAmountSender + plugin.dgray + " referrals.");
+            return;
         } else {
-            targetconfirmedamount = Bukkit.getPlayer(args[1]);
-            Player targetamountnull = Bukkit.getPlayer(args[1]);
-            referAmountTarget = referdatabase.getString(targetconfirmedamount.getUniqueId().toString());
-            if (targetamountnull == null) {
-                sender.sendMessage(prefix + ChatColor.RED + "Sorry, but we could not find the player specified.");
-                return true;
+
+            Player targetconfirmedamount = Bukkit.getPlayer(args[0]);
+            Player targetamountnull = Bukkit.getPlayer(args[0]);
+            String referAmountTarget = plugin.referdatabase.getString(targetconfirmedamount.getUniqueId().toString());
+
+            if (targetamountnull == null)
+            {
+                p.sendMessage(plugin.prefix + ChatColor.RED + "Sorry, but we could not find the player specified.");
+                return;
             } else {
-                if (!referdatabase.contains(targetconfirmedamount.getUniqueId().toString())) {
-                    sender.sendMessage(prefix + dgray + "That player has never been referred before!");
-                    return true;
+                if (!plugin.referdatabase.contains(targetconfirmedamount.getUniqueId().toString()))
+                {
+                    p.sendMessage(plugin.prefix + plugin.dgray + "That player has never been referred before!");
+                    return;
                 } else {
-                    sender.sendMessage(prefix + gray + targetconfirmedamount.getName() + dgray + " has " + gray + referAmountTarget + dgray + " referrals.");
-                    return true;
+                    p.sendMessage(plugin.prefix + plugin.gray + targetconfirmedamount.getName()
+                            + plugin.dgray + " has " + plugin.gray + referAmountTarget + plugin.dgray + " referrals.");
+                    return;
                 }
             }
         }

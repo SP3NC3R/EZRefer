@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by Spencer on 3/11/2016.
  */
+@SuppressWarnings("deprecation")
 public class referAdd {
     Main plugin;
 
@@ -18,29 +19,39 @@ public class referAdd {
         this.plugin = passedPlugin;
     }
 
-    public void actionAdd(final Player p, String[] args, OfflinePlayer targetconfirmed, String uuid) {
+    public void actionAdd(final Player p, String[] args, OfflinePlayer targetconfirmed) {
 
-        p.sendMessage(plugin.prefix + plugin.dgray + "Please specify a player: " + plugin.gray + "/refer admin add <player>" + plugin.dgray + ".");
-        return;
-
-    }
-    else
-    {
-        if (args.length == 2)
+        if (!(args.length == 3))
         {
+            p.sendMessage(plugin.prefix + plugin.dgray + "Please specify a player: "
+                    + plugin.gray + "/refer admin add <player> <amount>" + plugin.dgray + ".");
+            return;
+        }
+        if (!(args.length == 4)) {
+            p.sendMessage(plugin.prefix + plugin.dgray + "Please specify the amount to add: "
+                    + plugin.gray + "/refer admin add <player> <amount>" + plugin.dgray + ".");
+            return;
+        }
+        if (!plugin.isInt(args[3])) {
+            p.sendMessage(plugin.prefix + plugin.dgray + "Only numbers are allowed: "
+                    + plugin.gray + "/refer admin add <player> <amount>" + plugin.dgray + ".");
+            return;
+        } else {
             plugin.targetconfirmed = Bukkit.getOfflinePlayer(args[2]);
-            uuid = plugin.targetconfirmed.getUniqueId().toString();
-            String referGetCount = referdatabase.getString(targetconfirmed.getUniqueId().toString());
+            String uuid = plugin.targetconfirmed.getUniqueId().toString();
+           // String referGetCount = plugin.referdatabase.getString(targetconfirmed.getUniqueId().toString());
+
             if (targetconfirmed == null)
             {
-                sender.sendMessage(prefix + ChatColor.RED + "Sorry, but we could not find the player specified.");
+                p.sendMessage(plugin.prefix + ChatColor.RED + "Sorry, but we could not find the player specified.");
                 return;
             }
             else
             {
-                referdatabase.set(uuid + ".referCount", referdatabase.getInt(uuid + ".referCount") + args[3]);
-                referdatabase.saveConfig();
-                sender.sendMessage(prefix + gray + args[3] + dgray + " refer count(s) has been added to " + gray + targetconfirmed.getName() + dgray + "'s account.");
+                plugin.referdatabase.set(uuid + ".referCount", plugin.referdatabase.getInt(uuid + ".referCount") + args[3]);
+                plugin.referdatabase.saveConfig();
+                p.sendMessage(plugin.prefix + plugin.gray + args[3] + plugin.dgray + " refer count(s) has been added to "
+                        + plugin.gray + targetconfirmed.getName() + plugin.dgray + "'s account.");
                 return;
             }
         }

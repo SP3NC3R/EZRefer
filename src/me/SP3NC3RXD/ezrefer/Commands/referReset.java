@@ -3,11 +3,13 @@ package me.SP3NC3RXD.ezrefer.Commands;
 import me.SP3NC3RXD.ezrefer.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 /**
  * Created by Spencer on 3/11/2016.
  */
+@SuppressWarnings("deprecation")
 public class referReset {
     Main plugin;
 
@@ -15,24 +17,27 @@ public class referReset {
         this.plugin = passedPlugin;
     }
 
-    public void actionReset(final Player p, String[] args) {
+    public void actionReset(final Player p, String[] args, OfflinePlayer targetconfirmed) {
 
-        sender.sendMessage(prefix + dgray + "Please specify a player: " + gray + "/refer admin reset <player>" + dgray + ".");
-        return true;
-    } else {
-        if (args.length == 1) {
+        if (!(args.length == 3))
+        {
+            p.sendMessage(plugin.prefix + plugin.dgray + "Please specify a player: "
+                    + plugin.gray + "/refer admin reset <player>" + plugin.dgray + ".");
+            return;
+        } else {
+
             targetconfirmed = Bukkit.getOfflinePlayer(args[2]);
-            uuid = targetconfirmed.getUniqueId().toString();
-            String referGetCount = referdatabase.getString(targetconfirmed.getUniqueId().toString());
-            if (targetconfirmed == null) {
-                sender.sendMessage(prefix + ChatColor.RED + "Sorry, but we could not find the player specified.");
-                return true;
+            String uuid = targetconfirmed.getUniqueId().toString();
+            String referGetCount = plugin.referdatabase.getString(targetconfirmed.getUniqueId().toString());
+
+            if (targetconfirmed == null)
+            {
+                p.sendMessage(plugin.prefix + ChatColor.RED + "Sorry, but we could not find the player specified.");
+                return;
             } else {
-                referdatabase.set(uuid + ".referCount", 0);
-                return true;
+                plugin.referdatabase.set(uuid + ".referCount", 0);
+                return;
             }
         }
-
-        //end
     }
 }
